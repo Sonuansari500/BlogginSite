@@ -1,7 +1,13 @@
+import Navbar from './common/Navbar';
+import Footer from './common/Footer';
+import Home from './component/Home';
+
 function App() {
   return (
     <div className="App">
-     Welcome to belalSoft Blogging site
+    <Navbar/>
+    <Home/>
+    <Footer/>
     </div>
   );
 }
