@@ -1,0 +1,11 @@
+.carousel {
+  text-align: center;
+}
+.carousel .slider-wrapper .slider li img {
+  height: 380px;
+}
+.carousel .thumb {
+  height: 50px;
+  width: 5%;
+}
+  
