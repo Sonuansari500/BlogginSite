@@ -5,11 +5,3 @@
   padding: 0;
   font-family: 'Poppins', sans-serif;
 }
-.main {
- color: white;
- width: 100%;
- background-image: url('../public/assets/images/BSF_BG_Images.jpg');
- background-position: center;
- background-size: cover;
- height: 100vh;
-}
