@@ -1,0 +1,25 @@
+.header {
+    height: 50px;
+    background-color: rgba(24,10,23,255);
+    color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+      
+}
+
+.header .information {
+    font-size: 0.9rem;
+}
+
+.header .social-links a{
+    margin: 0 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    color: rgb(118,181,197);
+}
+
+.header .social-links a:hover i{
+    color: whitesmoke;
+}
