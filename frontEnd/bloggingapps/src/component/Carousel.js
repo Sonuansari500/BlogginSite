@@ -7,7 +7,7 @@ import carouselImage2 from "../Images/2.jpg";
 var images = [carouselImage1, carouselImage2];
 
 export default () => (
-  <Carousel className="carousel-wrapper" autoPlay>
+  <Carousel className="carousel-wrapper" autoPlay swipeable>
     <div>
       <img src={carouselImage1} />
       <div className="legends">
