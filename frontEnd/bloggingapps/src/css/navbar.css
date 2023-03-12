@@ -1,3 +1,8 @@
+.nav-container {
+    position: sticky;
+    top: 0px;
+    z-index: 20;
+}
 .navbar {
     height: 100px;
     background-color: antiquewhite;
@@ -5,7 +10,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    color: #000000;
+    color: var(--black);
 }
 
 .navbar .logo h1{
@@ -13,7 +18,7 @@
     font-family: Impact, Charcoal, sans-serif;
     letter-spacing: 1.8px;
     word-spacing: 0.8px;
-    color: black;
+    color: var(--black);
     font-weight: 400;
     font-style: italic;
     font-variant: small-caps;
@@ -22,7 +27,7 @@
     user-select: none;
 }
 .navbar .logo h1 span{
-    color: rgb(248, 102, 102);
+    color: var(--red);
 }
 
 .navbar .menus .menu-items{
@@ -45,12 +50,12 @@
 }
 
 .navbar .menus .menu-items li a:hover {
-    color: rgb(248, 102, 102);
+    color: var(--red);
     transform: scale(1.2);
 }
 
 .navbar .donate {
-    color: rgb(248, 102, 102);
+    color: var(--red);
     font-size: 1.5rem;
     transition: all 0.3s ease;
     cursor: pointer;
