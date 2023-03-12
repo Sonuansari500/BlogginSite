@@ -18,14 +18,14 @@ export default function prayerTimings() {
         <h1>Prayer Timings</h1>
       </div>
       <div className="timing-cards">
-        {prayerContents.map((prayer, key) => {
+        {prayerContents.map((item) => (
           <Card
-            key={key}
-            title={prayer.Name}
-            daytime={prayer.DayTime}
-            time={prayer.Time}
-          />;
-        })}
+            // title={prayer.Name}
+            // daytime={prayer.DayTime}
+            // time={prayer.Time}
+            data={item}
+          />
+        ))}
       </div>
     </div>
   );

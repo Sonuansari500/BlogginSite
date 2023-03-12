@@ -11,12 +11,12 @@ export default function card(props) {
             <img src={Fajr} />
           </div>
           <div className="card-button">
-            <span>{props.title}</span>
+            <span>{props.data.Name}</span>
           </div>
         </div>
         <div className="card-content">
           <div className="day-time">
-            <span>{props.daytime}</span>
+            <span>{props.data.DayTime}</span>
           </div>
           <div className="divider">
             <span>|</span>
@@ -25,7 +25,7 @@ export default function card(props) {
             <span>
               <i class="fa-solid fa-clock"></i>
             </span>
-            <span>{props.time}</span>
+            <span>{props.data.Time}</span>
           </div>
         </div>
       </div>
