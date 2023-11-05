@@ -1,18 +1,18 @@
-import Header from "./common/Header";
-import Navbar from "./common/Navbar";
-import Footer from "./common/Footer";
-import Home from "./page/Home"
-import logo from "./Images/islamic-logo.png";
-import Carousel from "./component/Carousel";
-
+import { Route, Routes } from "react-router-dom";
+import "./app.css";
+import Layout from "./Layout";
+import IndexPage from "./pages/IndexPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 function App() {
   return (
-    <div className="main">
-      <Header />
-      <Navbar logo="logo" />
-      <Home />
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<IndexPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Route>
+    </Routes>
   );
 }
 
