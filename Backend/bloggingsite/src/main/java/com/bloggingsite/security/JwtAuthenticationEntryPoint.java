@@ -2,21 +2,32 @@ package com.bloggingsite.security;
 
 import java.io.PrintWriter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+
+import com.bloggingsite.model.GenericResponseBean;
 
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    @Override
+
+	@Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException, java.io.IOException {
+
+		
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      
+        response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        PrintWriter writer = response.getWriter();
-        writer.println("Access Denied !! " + authException.getMessage());
+        response.getOutputStream().println("{ \"error\": \"" + authException.getMessage() + "\" }");
+       
     }
 }
