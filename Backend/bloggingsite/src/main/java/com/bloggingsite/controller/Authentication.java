@@ -34,6 +34,13 @@ public class Authentication {
 
 	    @Autowired
 	    private JwtHelper helper;
+	    
+	    @PostMapping("/signup")
+	    public User signup(@RequestBody User request) {
+	    	return userService.createUser(request);
+	    	
+	    }
+
 	    @PostMapping("/login")
 	    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
 
@@ -61,12 +68,7 @@ public class Authentication {
 
 	    }
 	    
-	    @PostMapping("/register")
-	    public User signup(@RequestBody User request) {
-	    	return userService.createUser(request);
-	    	
-	    }
-
+	    
 	    @ExceptionHandler(BadCredentialsException.class)
 	    public String exceptionHandler() {
 	        return "Credentials Invalid !!";
