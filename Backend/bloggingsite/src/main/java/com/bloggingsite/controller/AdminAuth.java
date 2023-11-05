@@ -1,5 +1,5 @@
 package com.bloggingsite.controller;
 
-public class AdminController {
+public class AdminAuth {
 
 }
