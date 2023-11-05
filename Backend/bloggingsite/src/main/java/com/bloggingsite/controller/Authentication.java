@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bloggingsite.model.GenericResponseBean;
 import com.bloggingsite.model.JwtRequest;
 import com.bloggingsite.model.JwtResponse;
 import com.bloggingsite.model.User;
@@ -36,7 +37,7 @@ public class Authentication {
 	    private JwtHelper helper;
 	    
 	    @PostMapping("/signup")
-	    public User signup(@RequestBody User request) {
+	    public GenericResponseBean signup(@RequestBody User request) {
 	    	return userService.createUser(request);
 	    	
 	    }

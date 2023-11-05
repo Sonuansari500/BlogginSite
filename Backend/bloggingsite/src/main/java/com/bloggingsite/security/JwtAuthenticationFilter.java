@@ -32,16 +32,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
+    public void printError(HttpServletResponse response,String message) throws IOException {
+    	response.setStatus(response.SC_UNAUTHORIZED);
+        
+        response.setContentType("application/json");
+        response.setStatus(response.SC_UNAUTHORIZED);
+        response.getOutputStream().println("{ \"error\": \"" + message + "\" }");
+    }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-        //Authorization
 
         String requestHeader = request.getHeader("Authorization");
         //Bearer 2352345235sdfrsfgsdfsdf
@@ -61,11 +61,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } catch (ExpiredJwtException e) {
                 logger.info("Given jwt token is expired !!");
                 e.printStackTrace();
+                printError( response, e.getMessage());
             } catch (MalformedJwtException e) {
                 logger.info("Some changed has done in token !! Invalid Token");
-                e.printStackTrace();
+                printError( response, e.getMessage());
             } catch (Exception e) {
-                e.printStackTrace();
+            	printError( response, e.getMessage());
 
             }
 
@@ -101,4 +102,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
     }
+   
 }

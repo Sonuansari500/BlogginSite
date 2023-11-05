@@ -9,7 +9,6 @@ import com.bloggingsite.model.User;
 @Component
 public interface UserRepository extends JpaRepository<User, Long>{
 	
-
 	public Optional<User> findByEmail(String username);
 
 }
