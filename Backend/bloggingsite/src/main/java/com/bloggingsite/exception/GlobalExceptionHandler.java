@@ -34,4 +34,11 @@ public class GlobalExceptionHandler {
 		errors.put("message", "Credentials Invalid !!");
 		return errors;
 	}
+	@ExceptionHandler(UserIsAlreadyPresent.class)
+	public Map<String, String> userIsAlreadyPresent(UserIsAlreadyPresent e) {
+		Map<String, String> errors = new HashMap<>();
+		errors.put("error", "true");
+		errors.put("message", e.getMessage());
+		return errors;
+	}
 }

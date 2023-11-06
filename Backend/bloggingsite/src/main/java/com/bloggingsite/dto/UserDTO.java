@@ -1,10 +1,9 @@
-package com.bloggingsite.model;
+package com.bloggingsite.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
-
 @Data
-public class JwtRequest {
+public class UserDTO {
 	@NotEmpty
 	@jakarta.validation.constraints.Email
 	private String email;
