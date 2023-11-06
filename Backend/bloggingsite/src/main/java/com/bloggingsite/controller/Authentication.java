@@ -1,5 +1,8 @@
 package com.bloggingsite.controller;
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +11,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +23,12 @@ import com.bloggingsite.model.User;
 import com.bloggingsite.security.JwtHelper;
 import com.bloggingsite.services.UserServices;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api")
 public class Authentication {
+	private static final Logger LOGGER = LogManager.getLogger(Authentication.class);
 	@Autowired
 	private UserServices userService;
 	 @Autowired
@@ -37,8 +42,9 @@ public class Authentication {
 	    private JwtHelper helper;
 	    
 	    @PostMapping("/signup")
-	    public GenericResponseBean signup(@RequestBody User request) {
-	    	return userService.createUser(request);
+	    public ResponseEntity<GenericResponseBean> signup(@Valid @RequestBody User request) {
+	    	LOGGER.info("Signup controller is invoked");
+	    	return new ResponseEntity<GenericResponseBean>(userService.createUser(request), HttpStatus.CREATED);
 	    	
 	    }
 
@@ -70,8 +76,4 @@ public class Authentication {
 	    }
 	    
 	    
-	    @ExceptionHandler(BadCredentialsException.class)
-	    public String exceptionHandler() {
-	        return "Credentials Invalid !!";
-	    }
 }
