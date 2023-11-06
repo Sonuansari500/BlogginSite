@@ -19,14 +19,18 @@ public class UserServices {
 	private PasswordEncoder encoder;
 	
 	public GenericResponseBean createUser(User user) {
-		Optional<User> findByEmail = userRepo.findByEmail(user.getEmail());
-		if(findByEmail.isPresent()) {
-			return new GenericResponseBean(true,"User is already present");
+		try {
+			Optional<User> findByEmail = userRepo.findByEmail(user.getEmail());
+			if(findByEmail.isPresent()) {
+				return new GenericResponseBean(true,"User is already present");
+			}
+			String password = user.getPassword();
+			user.setPassword(encoder.encode(password));
+			userRepo.save(user);
+			return new GenericResponseBean(false,"user is created");
+		}catch(Exception e) {
+			return new GenericResponseBean(true,e.getMessage());
 		}
-		String password = user.getPassword();
-		user.setPassword(encoder.encode(password));
-		User save = userRepo.save(user);
-		return new GenericResponseBean(false,"user is created");
 	}
 
 }
