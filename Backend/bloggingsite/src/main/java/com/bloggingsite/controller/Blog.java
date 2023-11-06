@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bloggingsite.model.Blogs;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/api/post")
 
 public class Blog {
 

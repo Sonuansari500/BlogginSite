@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.bloggingsite.model.GenericResponseBean;
 import com.bloggingsite.services.CustomUserDetailServices;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -33,11 +34,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
     public void printError(HttpServletResponse response,String message) throws IOException {
-    	response.setStatus(response.SC_UNAUTHORIZED);
-        
-        response.setContentType("application/json");
-        response.setStatus(response.SC_UNAUTHORIZED);
-        response.getOutputStream().println("{ \"error\": \"" + message + "\" }");
+    
+ 	response.setStatus(response.SC_UNAUTHORIZED);
+     
+      response.setContentType("application/json");
+      response.setStatus(response.SC_UNAUTHORIZED);
+       response.getOutputStream().println("{ \"error\": \"" + message + "\" }");
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -58,13 +60,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } catch (IllegalArgumentException e) {
                 logger.info("Illegal Argument while fetching the username !!");
                 e.printStackTrace();
+                printError( response, e.getMessage());
+                return;
             } catch (ExpiredJwtException e) {
                 logger.info("Given jwt token is expired !!");
                 e.printStackTrace();
                 printError( response, e.getMessage());
+                return;
             } catch (MalformedJwtException e) {
                 logger.info("Some changed has done in token !! Invalid Token");
                 printError( response, e.getMessage());
+                return;
             } catch (Exception e) {
             	printError( response, e.getMessage());
 

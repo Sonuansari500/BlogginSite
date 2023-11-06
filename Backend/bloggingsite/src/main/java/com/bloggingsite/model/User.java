@@ -2,6 +2,7 @@ package com.bloggingsite.model;
 
 import java.util.Collection;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +24,9 @@ public class User implements UserDetails{
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long ID;
+	
 	private String email;
+	@NotBlank(message = "password is mandatory")
 	private String password;
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
