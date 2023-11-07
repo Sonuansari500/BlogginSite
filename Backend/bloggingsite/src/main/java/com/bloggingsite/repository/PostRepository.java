@@ -7,4 +7,6 @@ import com.bloggingsite.model.Post;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
+	public void deleteByPostId(Integer postId);
+
 }

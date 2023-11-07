@@ -1,5 +1,6 @@
 package com.bloggingsite.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,20 +25,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long ID;
+	private int userId;
 	
 	private String email;
 	@NotBlank(message = "password is mandatory")
 	private String password;
-	@OneToMany
-	private List<Post> posts;
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	private List<Post> posts= new ArrayList<>();
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub

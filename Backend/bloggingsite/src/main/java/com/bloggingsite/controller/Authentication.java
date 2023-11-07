@@ -1,6 +1,5 @@
 package com.bloggingsite.controller;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +23,7 @@ import com.bloggingsite.dto.UserResponseDTO;
 import com.bloggingsite.dto.UserDTO;
 import com.bloggingsite.model.User;
 import com.bloggingsite.security.JwtHelper;
+import com.bloggingsite.services.CategoryService;
 import com.bloggingsite.services.UserServices;
 
 import jakarta.validation.Valid;
@@ -35,55 +35,53 @@ public class Authentication {
 	private static final Logger LOGGER = LogManager.getLogger(Authentication.class);
 	@Autowired
 	private UserServices userService;
-	 @Autowired
-	    private UserDetailsService userDetailsService;
+	
+	
+	@Autowired
+	private CategoryService categoryService;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-	    @Autowired
-	    private AuthenticationManager manager;
+	@Autowired
+	private AuthenticationManager manager;
 
+	@Autowired
+	private JwtHelper helper;
 
-	    @Autowired
-	    private JwtHelper helper;
-	    
-	    @PostMapping("/signup")
-	    public ResponseEntity<Map<String,String>> signup(@Valid @RequestBody User request) {
-	    	LOGGER.info("Signup controller is invoked");
-	    	userService.createUser(request);
-	    	Map<String,String> response = new HashMap<>();
-	    	response.put("error", "false");
-	    	response.put("message", "Created");
-	    	return new ResponseEntity<>(response, HttpStatus.CREATED);
-	    	
-	    }
+	@PostMapping("/signup")
+	public ResponseEntity<Map<String, String>> signup(@Valid @RequestBody User request) {
+		LOGGER.info("Signup controller is invoked");
+		userService.createUser(request);
+		Map<String, String> response = new HashMap<>();
+		response.put("error", "false");
+		response.put("message", "Created");
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 
-	    @PostMapping("/login")
-	    public ResponseEntity<UserResponseDTO> login(@RequestBody UserDTO request) {
+	}
 
-	        this.doAuthenticate(request.getEmail(), request.getPassword());
+	@PostMapping("/login")
+	public ResponseEntity<UserResponseDTO> login(@RequestBody UserDTO request) {
 
+		this.doAuthenticate(request.getEmail(), request.getPassword());
 
-	        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-	        String token = this.helper.generateToken(userDetails);
-	        UserResponseDTO response = UserResponseDTO.builder()
-	                .jwtToken(token)
-	                .username(userDetails.getUsername())
-	                .categories(userService.getAllCategories())
-	                .build();
-	        		
-	        return new ResponseEntity<>(response, HttpStatus.OK);
-	    }
-	    private void doAuthenticate(String email, String password) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+		String token = this.helper.generateToken(userDetails);
+		UserResponseDTO response = UserResponseDTO.builder().jwtToken(token).username(userDetails.getUsername())
+				.categories(categoryService.getAllCategory()).build();
 
-	        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
-	        try {
-	            manager.authenticate(authentication);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 
+	private void doAuthenticate(String email, String password) {
 
-	        } catch (BadCredentialsException e) {
-	            throw new BadCredentialsException(" Invalid Username or Password  !!");
-	        }
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
+		try {
+			manager.authenticate(authentication);
 
-	    }
-	    
-	    
+		} catch (BadCredentialsException e) {
+			throw new BadCredentialsException(" Invalid Username or Password  !!");
+		}
+
+	}
+
 }
