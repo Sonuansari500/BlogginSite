@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.bloggingsite.dto.Error;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -28,17 +31,13 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(BadCredentialsException.class)
-	public Map<String, String> exceptionHandler() {
-		Map<String, String> errors = new HashMap<>();
-		errors.put("error", "true");
-		errors.put("message", "Credentials Invalid !!");
-		return errors;
+	public ResponseEntity<Error> badCredentialExceptionHandler(BadCredentialsException e) {
+		Error build = com.bloggingsite.dto.Error.builder().error(true).message(e.getMessage()).build();
+		return new ResponseEntity<>(build,HttpStatus.BAD_REQUEST);
 	}
 	@ExceptionHandler(UserIsAlreadyPresent.class)
-	public Map<String, String> userIsAlreadyPresent(UserIsAlreadyPresent e) {
-		Map<String, String> errors = new HashMap<>();
-		errors.put("error", "true");
-		errors.put("message", e.getMessage());
-		return errors;
+	public ResponseEntity<Error> userIsAlreadyPresent(UserIsAlreadyPresent e) {
+		Error build = com.bloggingsite.dto.Error.builder().error(true).message(e.getMessage()).build();
+		return new ResponseEntity<>(build,HttpStatus.BAD_REQUEST);
 	}
 }

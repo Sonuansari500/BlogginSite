@@ -2,8 +2,6 @@ package com.bloggingsite.dto;
 
 import java.util.List;
 
-import com.bloggingsite.model.Category;
-
 import lombok.Builder;
 import lombok.Data;
 @Data
@@ -11,5 +9,7 @@ import lombok.Data;
 public class UserResponseDTO {
 	private String jwtToken;
 	private String username;
+	private String role;
 	private List<CategoryDTO> categories;
+	private List<PostDTO> posts;
 }
